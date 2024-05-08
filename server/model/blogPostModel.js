@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const User = require("./userModel");
 
 const blogPostSchema = new mongoose.Schema({
   title: {
@@ -19,6 +18,7 @@ const blogPostSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Comment",
   },
+
   likes: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Like",
@@ -39,9 +39,22 @@ blogPostSchema.pre(/find/, function (next) {
   this.populate({
     path: "author",
     select: "name email",
+  }).populate({
+    path: "comments",
+    select: "comment user",
   });
   next();
 });
+// blogPostSchema.pre(/find/, function (next) {
+//   this.populate({
+//     path: "author",
+//     select: "name email",
+//   }).populate({
+//     path: "comments",
+//     select: "comment user", // You can specify which fields to select from the 'Comment' collection
+//   });
+//   next();
+// });
 
 const BlogPost = mongoose.model("BlogPost", blogPostSchema);
 
