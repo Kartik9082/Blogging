@@ -3,7 +3,15 @@ const catchAsync = require("./../utils/catchAsync");
 const AppError = require("./../utils/appError");
 
 exports.getAllPosts = catchAsync(async (req, res, next) => {
-  const posts = await BlogPost.find();
+  // const posts = await BlogPost.find();
+  const features = new APIFeatures(BlogPost.find(filter), req.query)
+    .filter()
+    .sorting()
+    .limiting()
+    .paginate();
+
+  // const doc = await features.query.explain();
+  const posts = await features.query;
   res.status(200).json({
     status: "success",
     results: posts.length,

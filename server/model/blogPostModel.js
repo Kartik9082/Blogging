@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const User = require("./userModel");
 
-const blogPost = new mongoose.Schema({
+const blogPostSchema = new mongoose.Schema({
   title: {
     type: String,
     required: true,
@@ -23,12 +23,10 @@ const blogPost = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Like",
   },
-  createdAt: [
-    {
-      type: Date,
-      default: Date.now(),
-    },
-  ],
+  createdAt: {
+    type: Date,
+    default: Date.now(),
+  },
   updatedAt: [
     {
       type: Date,
@@ -37,6 +35,14 @@ const blogPost = new mongoose.Schema({
   ],
 });
 
-const BlogPost = mongoose.model("BlogPost", blogPost);
+blogPostSchema.pre(/find/, function (next) {
+  this.populate({
+    path: "author",
+    select: "name email",
+  });
+  next();
+});
+
+const BlogPost = mongoose.model("BlogPost", blogPostSchema);
 
 module.exports = BlogPost;
