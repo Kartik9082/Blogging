@@ -21,6 +21,14 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  role: {
+    type: String,
+    enum: {
+      values: ["user", "admin"],
+      message: "Role must be either user, guide, lead-guide, or admin.",
+    },
+    default: "user",
+  },
 });
 
 // Pre_save Middlewares
@@ -37,11 +45,26 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
+// Instance methods
 userSchema.methods.correctPassword = async function (
   candidatePassword,
   userPassword
 ) {
   return await bcrypt.compare(candidatePassword, userPassword);
+};
+
+userSchema.methods.changedPasswordAfter = function (JWTTimestamp) {
+  if (this.passwordChangedAt) {
+    const changedTimestamp = parseInt(
+      this.passwordChangedAt.getTime() / 1000,
+      10
+    ); // convert to UTC seconds
+    console.log(changedTimestamp, JWTTimestamp);
+    return JWTTimestamp < changedTimestamp;
+  }
+
+  // Password not changed
+  return false;
 };
 
 const User = mongoose.model("User", userSchema);

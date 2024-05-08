@@ -1,10 +1,11 @@
 const BlogPost = require("./../model/blogPostModel");
 const catchAsync = require("./../utils/catchAsync");
 const AppError = require("./../utils/appError");
+const APIFeatures = require("./../utils/apiFeatures");
 
 exports.getAllPosts = catchAsync(async (req, res, next) => {
   // const posts = await BlogPost.find();
-  const features = new APIFeatures(BlogPost.find(filter), req.query)
+  const features = new APIFeatures(BlogPost.find(), req.query)
     .filter()
     .sorting()
     .limiting()

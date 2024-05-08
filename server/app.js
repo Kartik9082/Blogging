@@ -18,6 +18,10 @@ app.use("/api/v1/users", userRouter);
 app.use("/api/v1/blogPost", blogRouter);
 app.use("/api/v1/comments", commentRouter);
 
+app.all("*", (req, res, next) => {
+  next(new AppError(`can't find${req.originalUrl} on the server`, 404));
+});
+
 // app.use("/api/users", require("./routes/api/users"));
 // app.use("/api/auth", require("./routes/api/auth"));
 // app.use("/api/posts", require("./routes/api/posts"));

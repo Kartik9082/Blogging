@@ -1,4 +1,5 @@
 const blogController = require("./../controllers/blogController");
+const authController = require("./../controllers/authController");
 const express = require("express");
 
 const router = express.Router();
@@ -12,5 +13,9 @@ router
   .route("/:id")
   .get(blogController.getPost)
   .patch(blogController.updatePost)
-  .delete(blogController.deletePost);
+  .delete(
+    authController.protect,
+    authController.restrictTo("admin"),
+    blogController.deletePost
+  );
 module.exports = router;
