@@ -8,12 +8,12 @@ const commentSchema = new mongoose.Schema({
     max: 2000,
   },
   user: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: mongoose.Schema.ObjectId,
     ref: "User",
   },
   post: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Post",
+    type: mongoose.Schema.ObjectId,
+    ref: "BlogPost",
   },
   createdAt: {
     type: Date,
@@ -24,7 +24,7 @@ const commentSchema = new mongoose.Schema({
 commentSchema.pre(/^find/, function (next) {
   this.populate({
     path: "user",
-    select: "name email",
+    select: "name",
   });
 
   next();

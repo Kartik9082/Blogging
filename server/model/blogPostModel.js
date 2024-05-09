@@ -10,17 +10,19 @@ const blogPostSchema = new mongoose.Schema({
     required: true,
   },
   author: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: mongoose.Schema.ObjectId,
     ref: "User",
     required: true,
   },
-  comments: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Comment",
-  },
+  comments: [
+    {
+      type: mongoose.Schema.ObjectId,
+      ref: "Comment",
+    },
+  ],
 
   likes: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: mongoose.Schema.ObjectId,
     ref: "Like",
   },
   createdAt: {
@@ -38,23 +40,17 @@ const blogPostSchema = new mongoose.Schema({
 blogPostSchema.pre(/find/, function (next) {
   this.populate({
     path: "author",
-    select: "name email",
+    select: "name", // Select the fields you want to populate from the 'User' model
   }).populate({
     path: "comments",
-    select: "comment user",
+    select: "comment user", // Select fields from the 'Comment' model
+    populate: {
+      path: "user",
+      select: "name", // Populate the 'user' field within the 'Comment' model
+    },
   });
   next();
 });
-// blogPostSchema.pre(/find/, function (next) {
-//   this.populate({
-//     path: "author",
-//     select: "name email",
-//   }).populate({
-//     path: "comments",
-//     select: "comment user", // You can specify which fields to select from the 'Comment' collection
-//   });
-//   next();
-// });
 
 const BlogPost = mongoose.model("BlogPost", blogPostSchema);
 

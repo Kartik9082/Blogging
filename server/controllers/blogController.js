@@ -11,7 +11,6 @@ exports.getAllPosts = catchAsync(async (req, res, next) => {
     .limiting()
     .paginate();
 
-  // const doc = await features.query.explain();
   const posts = await features.query;
   res.status(200).json({
     status: "success",
