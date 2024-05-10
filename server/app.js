@@ -5,10 +5,12 @@ const blogRouter = require("./routes/blogPostRoutes");
 const commentRouter = require("./routes/commentPostRoutes");
 const AppError = require("./utils/appError");
 const globalErrorHandler = require("./controllers/errorController");
+const cors = require("cors");
 
 const app = express();
 app.use(morgan("dev"));
 app.use(express.json());
+// app.use(cors());
 
 // app.get("/", (req, res) => {
 //   res.send("Hello World! MERN BLOGGING");
