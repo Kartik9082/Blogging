@@ -1,24 +1,29 @@
 const Navbar = () => {
   return (
-    <div className="flex gap-2 justify-evenly items-center text-2xl m-5 border-y-4 border-slate-700 p-4">
-      <div className="border-x-4 border-slate-700 p-2">
-        <h1 className="">MERN BLOG</h1>
+    <div className="flex justify-around min-h-10 max-w-full items-center shadow-md p-3">
+      <div>
+        <a href="/">
+          {" "}
+          <h1 className="font-semibold cursor-pointer">MERN BLOG</h1>
+        </a>
       </div>
-      <div className="">
-        <ul className="flex gap-20 justify-evenly ">
-          <li className="text-2xl border-y-4 hover:border-hidden p-1 border-slate-700 cursor-pointer hover:text-red-400">
+      <div>
+        <ul className="flex gap-10">
+          <li className="cursor-pointer hover:text-blue-400 transition delay-75 ">
             Home
           </li>
-          <li className="text-2xl border-y-4 hover:border-hidden p-1 border-slate-700 cursor-pointer hover:text-red-400">
+          <li className="cursor-pointer hover:text-blue-400 transition delay-75  ">
             Blog
           </li>
-          <li className="text-2xl border-y-4 hover:border-hidden p-1 border-slate-700 cursor-pointer hover:text-red-400">
-            About
+          <li className="cursor-pointer hover:text-blue-400 transition delay-75  ">
+            Posts+
           </li>
         </ul>
       </div>
-      <div className="border-x-4 p-2 border-slate-700">
-        <h1>KARTIKAY</h1>
+      <div className="bg-black text-white rounded-sm px-2 py-1 ">
+        <a href="/">
+          <h1>LOGIN</h1>
+        </a>
       </div>
     </div>
   );
