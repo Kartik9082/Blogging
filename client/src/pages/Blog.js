@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import PostCard from "../components/PostCard";
 
 const Blog = () => {
   const [data, setData] = useState([]);
@@ -17,6 +18,7 @@ const Blog = () => {
       }
       const res = await response.json();
       setData(res.data);
+      console.log(res.data);
     } catch (error) {
       setError(error.message);
     } finally {
@@ -33,22 +35,16 @@ const Blog = () => {
   }
 
   return (
-    <div className="">
-      {data.posts.length === 0 ? (
-        <div>No posts to display.</div>
-      ) : (
-        data.posts.map((post) => (
-          <div key={post._id}>
-            <h2>{post.title}</h2>
-            <p>Author: {post.author.name}</p>
-            <p>Content: {post.content}</p>
-            <p>Created At: {post.createdAt}</p>
-            <h2>{post.comments}</h2>
-            {/* Render other properties as needed */}
-          </div>
-        ))
-      )}
-    </div>
+    <>
+      <div className="border-b-2 border-black">Trending blogs</div>
+      <div className="flex flex-wrap gap-6 my-4">
+        {data.posts.length === 0 ? (
+          <div>No posts to display.</div>
+        ) : (
+          data.posts.map((post) => <PostCard post={post} />)
+        )}
+      </div>
+    </>
   );
 };
 
