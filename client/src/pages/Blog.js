@@ -41,7 +41,7 @@ const Blog = () => {
         {data.posts.length === 0 ? (
           <div>No posts to display.</div>
         ) : (
-          data.posts.map((post) => <PostCard post={post} />)
+          data.posts.map((post) => <PostCard key={post._id} post={post} />)
         )}
       </div>
     </>

@@ -1,6 +1,8 @@
+import { Link } from "react-router-dom";
+
 const Navbar = () => {
   return (
-    <div className="flex justify-around min-h-10 max-w-full items-center shadow-md p-3">
+    <div className="flex justify-around min-h-10 max-w-full items-center shadow-inner p-3">
       <div>
         <a href="/">
           {" "}
@@ -9,21 +11,25 @@ const Navbar = () => {
       </div>
       <div>
         <ul className="flex gap-10">
-          <li className="cursor-pointer hover:text-blue-400 transition delay-75 ">
-            Home
-          </li>
-          <li className="cursor-pointer hover:text-blue-400 transition delay-75  ">
-            Blog
-          </li>
+          <Link to="/">
+            <li className="cursor-pointer hover:text-blue-400 transition delay-75 ">
+              Home
+            </li>
+          </Link>
+          <Link to="/blog">
+            <li className="cursor-pointer hover:text-blue-400 transition delay-75  ">
+              Blog
+            </li>
+          </Link>
           <li className="cursor-pointer hover:text-blue-400 transition delay-75  ">
             Posts+
           </li>
         </ul>
       </div>
       <div className="bg-black text-white rounded-sm px-2 py-1 ">
-        <a href="/">
+        <Link to="/login">
           <h1>LOGIN</h1>
-        </a>
+        </Link>
       </div>
     </div>
   );
