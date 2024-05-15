@@ -1,5 +1,8 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { USER_API_ENDPOINT } from "../utils/constants";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -36,20 +39,22 @@ const Signup = () => {
     try {
       setLoading(true);
       setErrorMessage(null);
-      const res = await fetch("http://localhost:5001/api/v1/users/signup", {
-        method: "POST",
+      const res = await axios.post(`${USER_API_ENDPOINT}/signup`, formData, {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
       });
-      const data = await res.json();
+      const data = await res.data;
       if (data.success === false) {
         return setErrorMessage(data.message);
       }
-      console.log(data);
+
       setLoading(false);
-      if (res.ok) {
+      if (data.status === "success") {
+        toast.success(data.status);
+        // Check for the status code instead of "res.ok"
+        // Optionally, you might want to handle successful signup differently
+        // For now, let's navigate the user to the home page
         navigate("/");
       }
       setFormData({
@@ -58,8 +63,8 @@ const Signup = () => {
         password: "",
         confirmPassword: "",
       });
+      navigate("/login");
     } catch (err) {
-      console.log(err);
       setErrorMessage("An error occurred. Please try again.");
       setLoading(false);
     }
@@ -143,6 +148,13 @@ const Signup = () => {
               >
                 {loading ? "Loading...." : "Create Account"}
               </button>
+              <p className="text-center mt-2 text-red-500">{errorMessage}</p>
+              <div className="flex">
+                <p className="mr-2">Already have an account ?</p>
+                <Link to="/login">
+                  <span className="text-blue-600">login</span>
+                </Link>
+              </div>
             </form>
           </div>
         </div>

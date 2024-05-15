@@ -1,4 +1,66 @@
+import axios from "axios";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { USER_API_ENDPOINT } from "../utils/constants";
+import { useDispatch } from "react-redux"; // Importing useDispatch
+import { login } from "../redux/userSlice"; // Importing the login action
+import toast from "react-hot-toast";
+
 const Login = () => {
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  const dispatch = useDispatch(); // Initializing useDispatch
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!formData.email || !formData.password) {
+      return setErrorMessage("Please fill out all fields.");
+    }
+
+    try {
+      setLoading(true);
+      setErrorMessage(null);
+
+      const res = await axios.post(`${USER_API_ENDPOINT}/login`, formData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await res.data;
+      // console.log(data.token);
+      const token = data.token;
+      console.log(token);
+      localStorage.setItem("token", token);
+      if (data.success === false) {
+        return setErrorMessage(data.message);
+      }
+
+      setLoading(false);
+      if (data.status === "success") {
+        toast.success(data.status);
+        // Dispatching the login action with user data
+        dispatch(login(data)); // Assuming the response contains user data
+        navigate("/");
+      }
+      setFormData({
+        email: "",
+        password: "",
+      });
+    } catch (err) {
+      setErrorMessage("An error occurred. Please try again.");
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="bg-gradient-to-b from-[#a8edea] to-[#fed6e3]">
       <h1 className="text-3xl font-semibold mb-2 p-2 ">MERNBLOG</h1>
@@ -6,15 +68,17 @@ const Login = () => {
         <div className="bg-white p-8 rounded-2xl shadow-md w-full max-w-md justify-center">
           <h1 className="text-2xl font-semibold text-gray-800 mb-2">Login</h1>
           <div>
-            <form>
+            <form onSubmit={handleSubmit}>
               <div className="mb-2">
                 <label className="block text-gray-700 font-bold mb-2">
                   Enter Email
                 </label>
                 <input
+                  id="email"
                   className="p-2 focus:outline-none focus:outline-indigo-300  border-b-2 w-full"
                   type="email"
                   placeholder="Enter Email"
+                  onChange={handleChange}
                 />
               </div>
               <div className="mb-2">
@@ -22,19 +86,11 @@ const Login = () => {
                   Enter Password
                 </label>
                 <input
+                  id="password"
                   className="p-2 focus:outline-none focus:outline-indigo-300  border-b-2 w-full"
                   type="password"
                   placeholder="Enter password"
-                />
-              </div>
-              <div className="mb-2">
-                <label className="block text-gray-700 font-bold mb-2">
-                  Confirm Password
-                </label>
-                <input
-                  className="p-2 focus:outline-none focus:outline-indigo-300  border-b-2 w-full"
-                  type="password"
-                  placeholder="Confirm password"
+                  onChange={handleChange}
                 />
               </div>
               <button
@@ -43,6 +99,13 @@ const Login = () => {
               >
                 Login
               </button>
+              <p className="text-center mt-2 text-red-500">{errorMessage}</p>
+              <div className="flex">
+                <p className="mr-2">Don't have an account ?</p>
+                <Link to="/signup">
+                  <span className="text-blue-600">register</span>
+                </Link>
+              </div>
             </form>
           </div>
         </div>
