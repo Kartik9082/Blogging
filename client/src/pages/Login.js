@@ -37,9 +37,10 @@ const Login = () => {
       });
       const data = await res.data;
       // console.log(data.token);
-      const token = data.token;
-      console.log(token);
-      localStorage.setItem("token", token);
+      if (data.token) {
+        localStorage.setItem("token", JSON.stringify(data.token));
+      }
+
       if (data.success === false) {
         return setErrorMessage(data.message);
       }

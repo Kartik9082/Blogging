@@ -7,6 +7,7 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const handleLogout = () => {
     dispatch(logout());
+    localStorage.removeItem("token");
   };
 
   return (
@@ -37,7 +38,9 @@ const Navbar = () => {
         </ul>
       </div>
       <div className="flex items-center">
-        <h2 className="mr-2">{user?.userData?.data?.user?.name}</h2>
+        <Link to="/profile">
+          <h2 className="mr-2">{user?.userData?.data?.user?.name}</h2>
+        </Link>
         {user.isLoggedIn ? (
           <h1
             className="bg-black text-white rounded-sm px-2 py-1 cursor-pointer"

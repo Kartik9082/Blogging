@@ -11,12 +11,12 @@ const CreateBlog = () => {
   const [errorMessage, setErrorMessage] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const userData = useSelector((store) => store.user?.userData);
-  if (!userData) {
-    // If user is not logged in, redirect to login page
+  const user = useSelector((store) => store.user);
+  // console.log(user);
+
+  if (!user.isLoggedIn) {
     return <Navigate to="/login" />;
   }
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!title || !content) {
@@ -28,7 +28,7 @@ const CreateBlog = () => {
       const res = await axios.post(`${BLOG_API_ENDPOINT}`, {
         title,
         content,
-        author: userData?.data?.user?._id,
+        author: user?.userData?.data?.user?._id,
       });
       const data = await res.data;
       if (data.success === false) {
@@ -39,7 +39,11 @@ const CreateBlog = () => {
       if (data.status === "success") {
         toast.success(data.status);
       }
-    } catch (error) {}
+    } catch (error) {
+      setLoading(false);
+      setErrorMessage(error.message);
+      toast.error(error.message);
+    }
   };
 
   return (

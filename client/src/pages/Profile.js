@@ -2,9 +2,18 @@
 
 import React from "react";
 import useGetMyProfile from "../hooks/useGetMyProfile";
+import { useSelector } from "react-redux";
+import { Navigate } from "react-router-dom";
 
 const Profile = () => {
   useGetMyProfile();
+  const user = useSelector((store) => store?.user);
+  console.log(user);
+
+  if (!user.isLoggedIn) {
+    return <Navigate to="/login" />;
+  }
+
   return (
     <div className="container mx-auto mt-8 min-h-screen">
       <div className="flex items-center justify-between">
@@ -19,10 +28,11 @@ const Profile = () => {
           alt="User Avatar"
           className="rounded-full w-24 h-24"
         />
-        <h2 className="text-xl font-semibold mt-2">John Doe</h2>
-        <p className="text-gray-600">Web Developer</p>
-        <p className="text-gray-600">Location: New York, USA</p>
-        <p className="text-gray-600">Email: john@example.com</p>
+        <h2 className="text-xl font-semibold mt-2">
+          {user?.userData?.data?.user?.name}
+        </h2>
+        <p className="text-gray-600">Role:{user?.userData?.data?.user?.role}</p>
+        <p className="text-gray-600">{user?.userData?.data?.user?.email}</p>
         <p className="mt-4">Bio:</p>
         <p className="text-gray-600">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
