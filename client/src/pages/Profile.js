@@ -8,7 +8,7 @@ import { Navigate } from "react-router-dom";
 const Profile = () => {
   useGetMyProfile();
   const user = useSelector((store) => store?.user);
-  console.log(user);
+  // console.log(user);
 
   if (!user.isLoggedIn) {
     return <Navigate to="/login" />;

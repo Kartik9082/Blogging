@@ -10,9 +10,9 @@ const Blog = () => {
   if (!blogs) return null;
 
   return (
-    <div className="bg-gradient-to-r from-[#a8edea] to-[#fed6e3] flex flex-col  justify-center items-center pt-5 px-10">
+    <div className="bg-gradient-to-r from-[#a8edea] to-[#fed6e3] flex flex-col justify-center items-center pt-5 px-10">
       <div className="border-b-2 border-black">Trending blogs</div>
-      <div className="flex flex-wrap gap-6 my-4">
+      <div className="flex flex-wrap gap-8 my-4">
         {blogs?.blog?.data?.posts?.length === 0 ? (
           <div>No posts to display.</div>
         ) : (

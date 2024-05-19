@@ -1,5 +1,4 @@
 import { useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
 import { getBlog } from "../redux/blogslice";
 import { useEffect } from "react";
 

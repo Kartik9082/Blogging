@@ -1,6 +1,8 @@
-const PostCard = ({ title, author, content, createdAt }) => {
+import { Link } from "react-router-dom";
+
+const PostCard = ({ title, author, content, createdAt, _id }) => {
   const isoDateString = createdAt;
-  console.log(isoDateString);
+
   const dateObject = new Date(isoDateString);
 
   // Array of month names
@@ -32,9 +34,13 @@ const PostCard = ({ title, author, content, createdAt }) => {
   const formattedDate = `${monthName} ${day} ${year}`;
 
   return (
-    <div className=" max-w-xs mx-auto bg-white rounded-xl overflow-hidden shadow-md max-h-96">
+    <div className="w-72 mx-auto bg-white rounded-xl overflow-hidden shadow-md max-h-96">
       <div className="px-6 py-4">
-        <div className="font-bold text-xl mb-2 underline">{title} </div>
+        <Link to={"/blog/" + _id}>
+          <div className="font-bold text-xl mb-2 hover:text-gray-600 delay-75 transition ease-in-out">
+            {title}{" "}
+          </div>
+        </Link>
 
         <p className="text-sm text-gray-600 mt-4">{formattedDate}</p>
         <p className="text-sm text-gray-600">{author.name}</p>
