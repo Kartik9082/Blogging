@@ -1,10 +1,15 @@
+// redux/userSlice.js
 import { createSlice } from "@reduxjs/toolkit";
+
+const token = localStorage.getItem("token")
+  ? JSON.parse(localStorage.getItem("token"))
+  : null;
 
 export const userSlice = createSlice({
   name: "user",
   initialState: {
-    isLoggedIn: false,
-    userData: null,
+    isLoggedIn: !!token,
+    userData: token ? { token } : null,
     getCurrentUser: {},
   },
   reducers: {
@@ -15,6 +20,7 @@ export const userSlice = createSlice({
     logout: (state) => {
       state.isLoggedIn = false;
       state.userData = null;
+      localStorage.removeItem("token");
     },
     getCurrentUser: (state, action) => {
       state.getCurrentUser = action.payload;

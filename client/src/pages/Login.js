@@ -64,7 +64,6 @@ const Login = () => {
 
   return (
     <div className="bg-gradient-to-b from-[#a8edea] to-[#fed6e3]">
-      <h1 className="text-3xl font-semibold mb-2 p-2 ">MERNBLOG</h1>
       <div className=" flex justify-center items-center min-h-screen">
         <div className="bg-white p-8 rounded-2xl shadow-md w-full max-w-md justify-center">
           <h1 className="text-2xl font-semibold text-gray-800 mb-2">Login</h1>

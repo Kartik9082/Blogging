@@ -1,6 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { logout } from "../redux/userSlice";
+import { RiSearch2Line } from "react-icons/ri";
+import { AiFillHome } from "react-icons/ai";
+import { IoCreate } from "react-icons/io5";
 
 const Navbar = () => {
   const user = useSelector((store) => store?.user);
@@ -22,17 +25,17 @@ const Navbar = () => {
         <ul className="flex gap-10">
           <Link to="/">
             <li className="cursor-pointer hover:text-blue-400 transition delay-75 ">
-              Home
+              <AiFillHome size={20} />
             </li>
           </Link>
-          <Link to="/blog">
+          <Link to="#">
             <li className="cursor-pointer hover:text-blue-400 transition delay-75  ">
-              Blog
+              <RiSearch2Line size={20} />
             </li>
           </Link>
           <Link to="/create">
             <li className="cursor-pointer hover:text-blue-400 transition delay-75  ">
-              Create
+              <IoCreate size={20} />
             </li>
           </Link>
         </ul>

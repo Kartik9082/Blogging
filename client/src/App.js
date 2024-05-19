@@ -6,11 +6,13 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/SignUp";
 import { Toaster } from "react-hot-toast";
-
+import Error from "./pages/Error";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import store from "./redux/store";
 import Profile from "./pages/Profile";
 import CreateBlog from "./components/CreateBlog";
+import EditProfile from "./components/EditProfile";
+import PostInfo from "./components/PostInfo";
 
 const router = createBrowserRouter([
   {
@@ -33,13 +35,22 @@ const router = createBrowserRouter([
         path: "/profile",
         element: <Profile />,
       },
-      {
-        path: "/blog",
-        element: <Blog />,
-      },
+
       {
         path: "/create",
         element: <CreateBlog />,
+      },
+      {
+        path: "/edit",
+        element: <EditProfile />,
+      },
+      {
+        path: "*",
+        element: <Error />,
+      },
+      {
+        path: "/blog/:id",
+        element: <PostInfo />,
       },
     ],
   },
@@ -47,16 +58,14 @@ const router = createBrowserRouter([
 
 function LayoutComponent() {
   return (
-    <Provider store={store}>
-      <div className="font-poppins max-w-full justify-center">
-        <div className=" min-h-screen">
-          <Navbar />
-          <Outlet />
-          <Footer />
-          <Toaster position="top-right" />
-        </div>
+    <div className="font-poppins max-w-full justify-center">
+      <div className=" min-h-screen">
+        <Navbar />
+        <Outlet />
+        <Footer />
+        <Toaster position="top-right" />
       </div>
-    </Provider>
+    </div>
   );
 }
 

@@ -3,13 +3,14 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { BLOG_API_ENDPOINT } from "../utils/constants";
 import toast from "react-hot-toast";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const CreateBlog = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const user = useSelector((store) => store.user);
   // console.log(user);
@@ -38,6 +39,7 @@ const CreateBlog = () => {
       setLoading(false);
       if (data.status === "success") {
         toast.success(data.status);
+        navigate("/");
       }
     } catch (error) {
       setLoading(false);
@@ -47,31 +49,46 @@ const CreateBlog = () => {
   };
 
   return (
-    <div className="bg-gradient-to-b from-[#a8edea] to-[#fed6e3] min-h-screen p-4">
-      <div className=" flex items flex-col m-auto w-5/6 border border-black  bg-white rounded-xl overflow-hidden shadow-md mzz">
-        <h1 className="text-2xl font-semibold text-center">Create Blog</h1>
-        <form onSubmit={handleSubmit}>
+    <div className="max-w-lg mx-auto mt-8 min-h-[410px]">
+      <h2 className="text-2xl font-bold mb-4">Create Post</h2>
+      <form onSubmit={handleSubmit}>
+        <div className="mb-4">
+          <label htmlFor="title" className="block text-gray-700 font-bold mb-2">
+            Title
+          </label>
           <input
-            value={title}
-            className="outline-none p-2 rounded-lg m-2 w-3/4"
             type="text"
-            placeholder="Title"
+            id="title"
+            value={title}
             onChange={(e) => setTitle(e.target.value)}
+            className="border rounded-lg px-3 py-2 w-full focus:outline-none focus:ring focus:border-blue-300"
+            placeholder="Enter title..."
+            required
           />
-          <textarea
-            value={content}
-            className="outline-none p-2 rounded-lg m-2 w-3/4"
-            placeholder="Content"
-            onChange={(e) => setContent(e.target.value)}
-          />
-          <button
-            type="submit"
-            className="m-2 w-5/6 p-2 rounded-lg bg-slate-900 text-white"
+        </div>
+        <div className="mb-6">
+          <label
+            htmlFor="content"
+            className="block text-gray-700 font-bold mb-2"
           >
-            Post
-          </button>
-        </form>
-      </div>
+            Content
+          </label>
+          <textarea
+            id="content"
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+            className="border rounded-lg px-3 py-2 w-full h-32 focus:outline-none focus:ring focus:border-blue-300"
+            placeholder="What's going in your mind..."
+            required
+          />
+        </div>
+        <button
+          type="submit"
+          className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        >
+          Create Post
+        </button>
+      </form>
     </div>
   );
 };

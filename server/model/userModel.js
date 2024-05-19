@@ -29,6 +29,11 @@ const userSchema = new mongoose.Schema({
     },
     default: "user",
   },
+  bio: {
+    type: String,
+    min: 5,
+    max: 2000,
+  },
 });
 
 // Pre_save Middlewares

@@ -24,7 +24,7 @@ const Profile = () => {
       </div>
       <div className="mt-4">
         <img
-          src="https://via.placeholder.com/150"
+          src="https://picsum.photos/seed/picsum/200"
           alt="User Avatar"
           className="rounded-full w-24 h-24"
         />
@@ -33,13 +33,8 @@ const Profile = () => {
         </h2>
         <p className="text-gray-600">Role:{user?.userData?.data?.user?.role}</p>
         <p className="text-gray-600">{user?.userData?.data?.user?.email}</p>
-        <p className="mt-4">Bio:</p>
-        <p className="text-gray-600">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat.
-        </p>
+        {/* <p className="mt-4">Bio:</p> */}
+        <p className="text-gray-600">{user?.userData?.data?.user?.bio}</p>
       </div>
     </div>
   );
