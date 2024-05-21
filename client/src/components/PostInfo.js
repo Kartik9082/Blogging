@@ -16,7 +16,7 @@ const PostInfo = () => {
   return (
     <div className="flex justify-center min-w-[80%] bg-gradient-to-r from-[#a8edea] to-[#fed6e3] min-h-[100vh]">
       <div className="absolute w-8/12 flex flex-col m-4  p-4 bg-white rounded-xl">
-        <div className="flex justify-around items-center m-2 p-2 bg-stone-200">
+        <div className="flex justify-around items-center m-2 p-2 bg-gradient-to-r from-[gray] to-[white]">
           <div className="text-2xl font-bold">{blog.title}</div>
           <div className="text-sm text-slate-800">- {blog?.author?.name}</div>
         </div>

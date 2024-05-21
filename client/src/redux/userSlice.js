@@ -10,7 +10,15 @@ export const userSlice = createSlice({
   initialState: {
     isLoggedIn: !!token,
     userData: token ? { token } : null,
-    getCurrentUser: {},
+    getCurrentUser: {
+      data: {
+        user: {
+          name: "",
+          bio: "",
+          email: "",
+        },
+      },
+    },
   },
   reducers: {
     login: (state, action) => {
@@ -25,10 +33,13 @@ export const userSlice = createSlice({
     getCurrentUser: (state, action) => {
       state.getCurrentUser = action.payload;
     },
+    updateUser(state, action) {
+      state.getCurrentUser.data.user = action.payload;
+    },
   },
 });
 
-export const { login, logout, getCurrentUser } = userSlice.actions;
+export const { login, logout, getCurrentUser, updateUser } = userSlice.actions;
 
 export const selectUser = (state) => state.user;
 

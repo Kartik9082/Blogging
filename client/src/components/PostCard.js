@@ -1,6 +1,11 @@
 import { Link } from "react-router-dom";
 
 const PostCard = ({ title, author, content, createdAt, _id }) => {
+  const maxLength = 100;
+  const shortCont =
+    content.length > maxLength
+      ? content.slice(0, maxLength - 3) + "..."
+      : content;
   const isoDateString = createdAt;
 
   const dateObject = new Date(isoDateString);
@@ -34,17 +39,25 @@ const PostCard = ({ title, author, content, createdAt, _id }) => {
   const formattedDate = `${monthName} ${day} ${year}`;
 
   return (
-    <div className="w-72 mx-auto bg-white rounded-xl overflow-hidden shadow-md max-h-96">
-      <div className="px-6 py-4">
+    <div className="max-w-sm bg-white rounded-lg shadow-md overflow-hidden w-80 h-96 m-auto">
+      <div className="bg-gradient-to-r from-red-300 via-purple-300 to-yellow-300 h-48"></div>
+      <div className="p-4">
         <Link to={"/blog/" + _id}>
-          <div className="font-bold text-xl mb-2 hover:text-gray-600 delay-75 transition ease-in-out">
-            {title}{" "}
-          </div>
+          <h2 className="text-lg font-semibold mb-1">{title}</h2>
         </Link>
-
-        <p className="text-sm text-gray-600 mt-4">{formattedDate}</p>
-        <p className="text-sm text-gray-600">{author.name}</p>
-        <p className="text-gray-700 text-base mt-4">{content}</p>
+        <p className="text-gray-600 text-xs mb-4">{shortCont}</p>
+        <div className="flex items-center">
+          <div className="text-sm">
+            <p className="text-gray-900 font-medium leading-none">
+              - {author.name}
+            </p>
+          </div>
+        </div>
+        <div className="flex items-center justify-between mt-4">
+          <div className="text-gray-600 text-xs flex items-center">
+            <span>{formattedDate}</span>
+          </div>
+        </div>
       </div>
     </div>
   );

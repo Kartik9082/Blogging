@@ -22,8 +22,8 @@ const blogPostSchema = new mongoose.Schema({
   ],
 
   likes: {
-    type: mongoose.Schema.ObjectId,
-    ref: "Like",
+    type: Array,
+    default: [],
   },
   createdAt: {
     type: Date,
