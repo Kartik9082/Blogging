@@ -19,6 +19,7 @@ export const userSlice = createSlice({
         },
       },
     },
+    getUser: {},
   },
   reducers: {
     login: (state, action) => {
@@ -28,6 +29,7 @@ export const userSlice = createSlice({
     logout: (state) => {
       state.isLoggedIn = false;
       state.userData = null;
+      state.getCurrentUser = null;
       localStorage.removeItem("token");
     },
     getCurrentUser: (state, action) => {
@@ -36,10 +38,14 @@ export const userSlice = createSlice({
     updateUser(state, action) {
       state.getCurrentUser.data.user = action.payload;
     },
+    getUser: (state, action) => {
+      state.getUser = action.payload;
+    },
   },
 });
 
-export const { login, logout, getCurrentUser, updateUser } = userSlice.actions;
+export const { login, logout, getCurrentUser, updateUser, getUser } =
+  userSlice.actions;
 
 export const selectUser = (state) => state.user;
 

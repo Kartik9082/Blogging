@@ -42,7 +42,7 @@ const Navbar = () => {
       </div>
       <div className="flex items-center">
         <Link to="/profile">
-          <h2 className="mr-2">{user?.userData?.data?.user?.name}</h2>
+          <h2 className="mr-2">{user?.getCurrentUser?.data?.user?.name}</h2>
         </Link>
         {user.isLoggedIn ? (
           <h1

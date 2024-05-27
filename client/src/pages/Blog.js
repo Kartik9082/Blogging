@@ -1,9 +1,11 @@
 import PostCard from "../components/PostCard";
 import { useSelector } from "react-redux";
 import useBlog from "../hooks/useBlog";
+import useGetMyProfile from "../hooks/useGetMyProfile";
 
 const Blog = () => {
   useBlog();
+  useGetMyProfile();
 
   const blogs = useSelector((store) => store.blogs);
 

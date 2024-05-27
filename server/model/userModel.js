@@ -34,6 +34,10 @@ const userSchema = new mongoose.Schema({
     min: 5,
     max: 2000,
   },
+  photo: {
+    type: String,
+    default: "default.jpg",
+  },
 });
 
 // Pre_save Middlewares

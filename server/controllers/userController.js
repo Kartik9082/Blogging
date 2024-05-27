@@ -1,7 +1,39 @@
+const multer = require("multer");
 const User = require("./../model/userModel");
 const AppError = require("./../utils/appError");
 const catchAsync = require("./../utils/catchAsync");
 const APIFeatures = require("./../utils/apiFeatures");
+
+// configuring the multerStorage
+
+const multerStorage = multer.diskStorage({
+  // file destination
+  destination: (req, file, cb) => {
+    cb(null, "public/user-image");
+  },
+
+  // each file of item
+  filename: (req, file, cb) => {
+    const ext = file.mimetype.split("/")[1];
+    cb(null, `user-${req.user.id}-${Date.now()}.${ext}`);
+  },
+});
+
+const multerFilter = (req, file, cb) => {
+  if (file.mimetype.startsWith("image")) {
+    cb(null, true);
+  } else {
+    cb(new AppError("Not an image! Please upload only images.", 400), false);
+  }
+};
+
+const upload = multer({
+  storage: multerStorage,
+  fileFilter: multerFilter,
+  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB file size limit
+});
+
+exports.uploadUserPhoto = upload.single("photo");
 
 const filterObj = (obj, ...allowedFields) => {
   const filteredObj = {};
@@ -67,6 +99,9 @@ exports.updateMe = catchAsync(async (req, res, next) => {
     );
   }
   const filteredBody = filterObj(req.body, "name", "email", "bio");
+  if (req?.file?.filename) {
+    filteredBody.photo = `/public/user-image/${req.file.filename}`;
+  }
   const user = await User.findByIdAndUpdate(req.user.id, filteredBody, {
     new: true,
     runValidators: true,

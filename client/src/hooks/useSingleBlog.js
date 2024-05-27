@@ -9,22 +9,24 @@ const useSingleBlog = (id) => {
 
   const getSinglePost = async () => {
     try {
-      const data = await axios.get(`${BLOG_API_ENDPOINT}/${id}`, {
+      const response = await axios.get(`${BLOG_API_ENDPOINT}/${id}`, {
         headers: {
           "Content-Type": "application/json",
         },
         withCredentials: true,
       });
-      const json = await data;
-      dispatch(getSingleBlog(json));
+      // console.log(response.data.data.post);
+      dispatch(getSingleBlog(response.data));
     } catch (error) {
-      console.log("ERORR", error);
+      console.error("ERROR:", error);
     }
   };
 
   useEffect(() => {
-    getSinglePost();
-  }, []);
+    if (id) {
+      getSinglePost();
+    }
+  }, [id, dispatch]);
 };
 
 export default useSingleBlog;

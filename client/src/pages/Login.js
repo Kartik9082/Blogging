@@ -58,6 +58,7 @@ const Login = () => {
       });
     } catch (err) {
       setErrorMessage("An error occurred. Please try again.");
+      toast.error(err.response.data.message);
       setLoading(false);
     }
   };

@@ -4,7 +4,8 @@ const blogSlice = createSlice({
   name: "blog",
   initialState: {
     blog: [],
-    singleBlog: [],
+    singleBlog: {},
+    comments: [],
   },
   reducers: {
     getBlog: (state, action) => {
@@ -13,10 +14,18 @@ const blogSlice = createSlice({
     getSingleBlog: (state, action) => {
       state.singleBlog = action.payload;
     },
+    addComment: (state, action) => {
+      state.singleBlog.comments = action.payload;
+    },
   },
 });
 
-export const { getBlog, getBlogSuccess, getBlogError, getSingleBlog } =
-  blogSlice.actions;
+export const {
+  getBlog,
+  getBlogSuccess,
+  getBlogError,
+  getSingleBlog,
+  addComment,
+} = blogSlice.actions;
 
 export default blogSlice.reducer;

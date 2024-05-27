@@ -7,12 +7,13 @@ import toast from "react-hot-toast";
 
 const EditProfile = () => {
   const user = useSelector((store) => store?.user);
-  const { bio, email, name } = user?.getCurrentUser?.data?.user;
+  const { bio, email, name, photo } = user?.getCurrentUser?.data?.user;
   const token = useSelector((store) => store?.user?.userData?.token);
   const [formData, setFormData] = useState({
     name: "",
     bio: "",
     email: "",
+    photo: "",
   });
 
   const [errorMessage, setErrorMessage] = useState(null);
@@ -21,11 +22,16 @@ const EditProfile = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    setFormData({ name, bio, email });
-  }, [name, bio, email]);
+    setFormData({ name, bio, email, photo });
+  }, [name, bio, email, photo]);
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.id]: e.target.value });
+    const { id, value, files } = e.target;
+    if (id === "photo") {
+      setFormData({ ...formData, [id]: files[0] });
+    } else {
+      setFormData({ ...formData, [id]: value });
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -33,22 +39,35 @@ const EditProfile = () => {
     try {
       setLoading(true);
       setErrorMessage(null);
-      const res = await axios.patch(`${USER_API_ENDPOINT}/updateMe`, formData, {
+
+      const data = new FormData();
+      data.append("name", formData.name);
+      data.append("bio", formData.bio);
+      data.append("email", formData.email);
+      if (formData.photo) {
+        data.append("photo", formData.photo);
+      }
+
+      const res = await axios.patch(`${USER_API_ENDPOINT}/updateMe`, data, {
         headers: {
           Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
         },
       });
-      const data = await res.data;
-      if (!data.success) {
+
+      const responseData = res.data;
+      console.log("Response:", responseData);
+
+      if (responseData.status !== "success") {
         setLoading(false);
-        return setErrorMessage(data.message);
+        return setErrorMessage(responseData.message);
       }
+
       setLoading(false);
-      if (data.status === "success") {
-        toast.success(data.message);
-        navigate("/profile");
-      }
+      toast.success("Profile updated successfully!");
+      navigate("/profile");
     } catch (error) {
+      console.error("Error:", error);
       setErrorMessage(error.message);
       toast.error(error.message);
       setLoading(false);
@@ -60,8 +79,20 @@ const EditProfile = () => {
       <form
         onSubmit={handleSubmit}
         className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md"
+        encType="multipart/form-data"
       >
         <h2 className="text-2xl font-bold mb-4 text-gray-800">Edit Profile</h2>
+        <div className="mb-4">
+          <label className="block text-gray-700 mb-2" htmlFor="photo">
+            Photo
+          </label>
+          <input
+            type="file"
+            onChange={handleChange}
+            id="photo"
+            className="border rounded-lg px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
+          />
+        </div>
         <div className="mb-4">
           <label className="block text-gray-700 mb-2" htmlFor="name">
             Name
@@ -79,7 +110,7 @@ const EditProfile = () => {
             Email
           </label>
           <input
-            type="text"
+            type="email" // Change input type to email
             value={formData.email}
             onChange={handleChange}
             id="email"

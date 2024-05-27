@@ -13,6 +13,7 @@ import Profile from "./pages/Profile";
 import CreateBlog from "./components/CreateBlog";
 import EditProfile from "./components/EditProfile";
 import PostInfo from "./components/PostInfo";
+import UserProfile from "./pages/UserProfile";
 
 const router = createBrowserRouter([
   {
@@ -51,6 +52,10 @@ const router = createBrowserRouter([
       {
         path: "/blog/:id",
         element: <PostInfo />,
+      },
+      {
+        path: "/user/:id",
+        element: <UserProfile />,
       },
     ],
   },

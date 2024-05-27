@@ -8,16 +8,22 @@ import { Navigate, useNavigate } from "react-router-dom";
 const CreateBlog = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [image, setImage] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const user = useSelector((store) => store.user);
-  // console.log(user);
+  const token = useSelector((store) => store?.user?.userData?.token);
 
   if (!user.isLoggedIn) {
     return <Navigate to="/login" />;
   }
+
+  const handleImageChange = (e) => {
+    setImage(e.target.files[0]);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!title || !content) {
@@ -26,11 +32,22 @@ const CreateBlog = () => {
     try {
       setLoading(true);
       setErrorMessage(null);
-      const res = await axios.post(`${BLOG_API_ENDPOINT}`, {
-        title,
-        content,
-        author: user?.userData?.data?.user?._id,
+
+      const formData = new FormData();
+      formData.append("title", title);
+      formData.append("content", content);
+      formData.append("author", user?.userData?.data?.user?._id);
+      if (image) {
+        formData.append("blogImage", image); // Use "blogImage" to match your model
+      }
+
+      const res = await axios.post(`${BLOG_API_ENDPOINT}`, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
       });
+
       const data = await res.data;
       if (data.success === false) {
         return setErrorMessage(data.message);
@@ -38,7 +55,7 @@ const CreateBlog = () => {
 
       setLoading(false);
       if (data.status === "success") {
-        toast.success(data.status);
+        toast.success("Blog post created successfully!");
         navigate("/");
       }
     } catch (error) {
@@ -53,6 +70,15 @@ const CreateBlog = () => {
       <h2 className="text-2xl font-bold mb-4">Create Post</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
+          <label htmlFor="image" className="block text-gray-700 font-bold mb-2">
+            Upload Image
+          </label>
+          <input
+            type="file"
+            id="image"
+            onChange={handleImageChange}
+            className="border rounded-lg px-3 py-2 w-full focus:outline-none focus:ring focus:border-blue-300"
+          />
           <label htmlFor="title" className="block text-gray-700 font-bold mb-2">
             Title
           </label>
@@ -85,13 +111,14 @@ const CreateBlog = () => {
         <button
           type="submit"
           className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          disabled={loading}
         >
-          Create Post
+          {loading ? "Creating..." : "Create Post"}
         </button>
       </form>
+      {errorMessage && <p className="text-red-500 mt-4">{errorMessage}</p>}
     </div>
   );
 };
 
 export default CreateBlog;
-// title, content, user

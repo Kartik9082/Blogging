@@ -14,6 +14,10 @@ const blogPostSchema = new mongoose.Schema({
     ref: "User",
     required: true,
   },
+  blogImage: {
+    type: String,
+    required: false,
+  },
   comments: [
     {
       type: mongoose.Schema.ObjectId,

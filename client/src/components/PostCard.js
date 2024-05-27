@@ -6,6 +6,12 @@ const PostCard = ({ title, author, content, createdAt, _id }) => {
     content.length > maxLength
       ? content.slice(0, maxLength - 3) + "..."
       : content;
+
+  const maxLengthTitle = 50;
+  const shortTitle =
+    title.length > maxLengthTitle
+      ? title.slice(0, maxLengthTitle - 3) + "..."
+      : title;
   const isoDateString = createdAt;
 
   const dateObject = new Date(isoDateString);
@@ -43,13 +49,13 @@ const PostCard = ({ title, author, content, createdAt, _id }) => {
       <div className="bg-gradient-to-r from-red-300 via-purple-300 to-yellow-300 h-48"></div>
       <div className="p-4">
         <Link to={"/blog/" + _id}>
-          <h2 className="text-lg font-semibold mb-1">{title}</h2>
+          <h2 className="text-lg font-semibold mb-1">{shortTitle}</h2>
         </Link>
         <p className="text-gray-600 text-xs mb-4">{shortCont}</p>
         <div className="flex items-center">
           <div className="text-sm">
             <p className="text-gray-900 font-medium leading-none">
-              - {author.name}
+              - {author?.name}
             </p>
           </div>
         </div>
