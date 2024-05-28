@@ -1,3 +1,4 @@
+// utils/APIFeatures.js
 class APIFeatures {
   constructor(query, queryString) {
     this.query = query;
@@ -9,15 +10,26 @@ class APIFeatures {
     const excludeFields = ["page", "sort", "limit", "fields"];
     excludeFields.forEach((el) => delete queryObj[el]);
 
-    // 1B) Advance Filtering
     let queryStr = JSON.stringify(queryObj);
     queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`);
-    this.query = this.query.find(JSON.parse(queryStr));
+    const parsedQuery = JSON.parse(queryStr);
 
+    if (parsedQuery.title) {
+      parsedQuery.title = { $regex: parsedQuery.title, $options: "i" };
+    }
+    if (parsedQuery["author.name"]) {
+      parsedQuery["author.name"] = {
+        $regex: parsedQuery["author.name"],
+        $options: "i",
+      };
+    }
+
+    console.log("Parsed Query:", parsedQuery); // Log the parsed query
+
+    this.query = this.query.find(parsedQuery);
     return this;
   }
 
-  // sorting
   sorting() {
     if (this.queryString.sort) {
       const sortBy = this.queryString.sort.split(",").join(" ");
@@ -28,7 +40,6 @@ class APIFeatures {
     return this;
   }
 
-  // limiting
   limiting() {
     if (this.queryString.fields) {
       const fields = this.queryString.fields.split(",").join(" ");
@@ -36,11 +47,9 @@ class APIFeatures {
     } else {
       this.query = this.query.select("-__v");
     }
-
     return this;
   }
 
-  //pagination
   paginate() {
     const page = this.queryString.page * 1 || 1;
     const limit = this.queryString.limit * 1 || 10;

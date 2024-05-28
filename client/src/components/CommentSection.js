@@ -4,9 +4,9 @@ import CreateComment from "./CreateComment";
 
 const CommentSection = ({ _id }) => {
   return (
-    <div className="flex ">
-      <CommentList />
+    <div className="flex flex-col h-64">
       <CreateComment _id={_id} />
+      <CommentList />
     </div>
   );
 };

@@ -45,7 +45,7 @@ const PostCard = ({ title, author, content, createdAt, _id }) => {
   const formattedDate = `${monthName} ${day} ${year}`;
 
   return (
-    <div className="max-w-sm bg-white rounded-lg shadow-md overflow-hidden w-80 h-96 m-auto">
+    <div className="max-w-sm text-white bg-[#1b2021] rounded-lg shadow-md overflow-hidden w-72 h-auto md:w-80 md:h-96 m-auto">
       <div className="bg-gradient-to-r from-red-300 via-purple-300 to-yellow-300 h-48"></div>
       <div className="p-4">
         <Link to={"/blog/" + _id}>
@@ -54,7 +54,7 @@ const PostCard = ({ title, author, content, createdAt, _id }) => {
         <p className="text-gray-600 text-xs mb-4">{shortCont}</p>
         <div className="flex items-center">
           <div className="text-sm">
-            <p className="text-gray-900 font-medium leading-none">
+            <p className="text-gray-50 font-medium leading-none">
               - {author?.name}
             </p>
           </div>

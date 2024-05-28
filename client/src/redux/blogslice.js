@@ -6,6 +6,7 @@ const blogSlice = createSlice({
     blog: [],
     singleBlog: {},
     comments: [],
+    searchResults: [], // New state to store search results
   },
   reducers: {
     getBlog: (state, action) => {
@@ -17,6 +18,12 @@ const blogSlice = createSlice({
     addComment: (state, action) => {
       state.singleBlog.comments = action.payload;
     },
+    searchBlogSuccess: (state, action) => {
+      state.searchResults = action.payload; // Update search results state
+    },
+    clearSearchResults: (state) => {
+      state.searchResults = []; // Clear search results state
+    },
   },
 });
 
@@ -26,6 +33,8 @@ export const {
   getBlogError,
   getSingleBlog,
   addComment,
+  searchBlogSuccess,
+  clearSearchResults,
 } = blogSlice.actions;
 
 export default blogSlice.reducer;

@@ -38,6 +38,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: "default.jpg",
   },
+  active: {
+    type: Boolean,
+    default: true,
+  },
 });
 
 // Pre_save Middlewares
@@ -51,6 +55,12 @@ userSchema.pre("save", async function (next) {
   // Delete passwordConfirm field
 
   this.confirmPassword = undefined;
+  next();
+});
+
+userSchema.pre(/^find/, function (next) {
+  // this points to current query
+  this.find({ active: { $ne: false } });
   next();
 });
 

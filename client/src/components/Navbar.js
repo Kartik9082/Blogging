@@ -21,18 +21,14 @@ const Navbar = () => {
           <h1 className="font-semibold cursor-pointer">MERN BLOG</h1>
         </a>
       </div>
-      <div>
+      <div className="hidden md:block">
         <ul className="flex gap-10">
           <Link to="/">
             <li className="cursor-pointer hover:text-blue-400 transition delay-75 ">
               <AiFillHome size={20} />
             </li>
           </Link>
-          <Link to="#">
-            <li className="cursor-pointer hover:text-blue-400 transition delay-75  ">
-              <RiSearch2Line size={20} />
-            </li>
-          </Link>
+
           <Link to="/create">
             <li className="cursor-pointer hover:text-blue-400 transition delay-75  ">
               <IoCreate size={20} />

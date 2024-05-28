@@ -20,7 +20,7 @@ router.patch(
   userController.updateMe
 );
 
-router.delete("/deleteMe", userController.deleteMe);
+router.patch("/deleteMe", authController.protect, userController.deleteMe);
 
 router.route("/").get(authController.protect, userController.getAllUsers);
 

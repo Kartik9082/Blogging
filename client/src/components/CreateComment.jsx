@@ -81,10 +81,10 @@ const CreateComment = ({ _id }) => {
   };
 
   return (
-    <div className="flex flex-col w-8/12 border-l-2 bg-white">
+    <div className="flex flex-col w-full mb-2  bg-[#111111]">
       <form onSubmit={handleSubmit} className="mt-2 p-4 flex flex-col">
         <input
-          className="border rounded-lg px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
+          className=" bg-[#111111] text-white border-b-2 rounded-lg px-3 py-2 w-full focus:outline-none"
           value={formData.comment}
           id="comment"
           onChange={handleChange}
@@ -92,7 +92,7 @@ const CreateComment = ({ _id }) => {
           placeholder="Enter Comment"
         />
         <button
-          className="m-2 w-20 p-2 rounded-xl bg-blue-950 text-white"
+          className="m-2 w-20 p-2 rounded-xl bg-black text-white"
           type="submit"
         >
           {loading ? "Loading" : "Post"}

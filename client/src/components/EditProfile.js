@@ -75,10 +75,10 @@ const EditProfile = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+    <div className="flex items-center justify-center min-h-screen bg-[#11151c]">
       <form
         onSubmit={handleSubmit}
-        className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md"
+        className="bg-white p-6 rounded-lg shadow-lg w-80 m-0 md:w-full max-w-md my-4"
         encType="multipart/form-data"
       >
         <h2 className="text-2xl font-bold mb-4 text-gray-800">Edit Profile</h2>
@@ -130,7 +130,7 @@ const EditProfile = () => {
         </div>
         <button
           type="submit"
-          className="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          className="bg-black text-white font-bold p-2 rounded mt-2 mx-2 text-xs mb-2 hover:bg-gray-600 transition delay-75 ease-in-out"
           disabled={loading}
         >
           {loading ? "Updating..." : "Update"}
