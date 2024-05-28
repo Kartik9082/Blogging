@@ -20,7 +20,7 @@ const CreateComment = ({ _id }) => {
   const user = useSelector((store) => store.user);
   if (!user.isLoggedIn) {
     return (
-      <div className="flex justify-center items-center w-8/12 border-l-2 bg-white font-semibold text-xs">
+      <div className="flex justify-center items-center w-full border-l-2 bg-white font-semibold text-xs p-2">
         You need to login first to comment
       </div>
     );

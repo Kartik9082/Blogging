@@ -53,9 +53,15 @@ const PostCard = ({ title, author, content, createdAt, _id }) => {
         </Link>
         <p className="text-gray-600 text-xs mb-4">{shortCont}</p>
         <div className="flex items-center">
-          <div className="text-sm">
-            <p className="text-gray-50 font-medium leading-none">
-              - {author?.name}
+          <div
+            className={
+              author?.name === undefined
+                ? "text-red-800"
+                : "text-sm text-gray-50"
+            }
+          >
+            <p className=" font-medium leading-none">
+              - {author?.name === undefined ? "Deleted User" : author?.name}
             </p>
           </div>
         </div>

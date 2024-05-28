@@ -71,9 +71,9 @@ const Signup = () => {
   };
 
   return (
-    <div className="bg-gradient-to-b from-[#a8edea] to-[#fed6e3]">
+    <div className="bg-[#11151c]">
       <div className=" flex justify-center items-center min-h-screen">
-        <div className="bg-white p-8 rounded-2xl shadow-md w-full max-w-md justify-center">
+        <div className="bg-white p-8 rounded-2xl shadow-md max-w-sm h-auto md:max-w-md justify-center">
           <h1 className="text-2xl font-semibold text-gray-800 mb-2">
             Create Account
           </h1>

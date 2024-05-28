@@ -12,11 +12,18 @@ const CommentList = () => {
         {comments && comments?.length > 0 ? (
           comments.map((comment) => (
             <ul className="flex " key={comment?._id}>
-              <li className="text-sm w-full text-white mb-2">
-                <span className="mx-2 font-medium text-gray-300 border-b-2">
-                  {comment?.user?.name}{" "}
+              <li className="text-sm w-full text-white mb-2 bg-[#454545] p-4 rounded-lg">
+                <span
+                  className={
+                    comment?.user?.name
+                      ? "mx-2 font-medium text-yellow-500 "
+                      : "mx-2 font-medium text-red-500 "
+                  }
+                >
+                  {comment?.user?.name ? comment?.user?.name : "Deleted user"}{" "}
                 </span>
-                {comment?.comment}
+                {">  "}
+                <span className="text-xs font-normal">{comment?.comment}</span>
               </li>
             </ul>
           ))
