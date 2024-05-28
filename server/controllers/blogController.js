@@ -5,12 +5,10 @@ const APIFeatures = require("./../utils/apiFeatures");
 const multer = require("multer");
 
 const multerStorage = multer.diskStorage({
-  // file destination
   destination: (req, file, cb) => {
     cb(null, "public/blog-image");
   },
 
-  // each file of item
   filename: (req, file, cb) => {
     const ext = file.mimetype.split("/")[1];
     cb(null, `user-${req?.user?.id}-${Date.now()}.${ext}`);
@@ -28,13 +26,12 @@ const multerFilter = (req, file, cb) => {
 const upload = multer({
   storage: multerStorage,
   fileFilter: multerFilter,
-  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB file size limit
+  limits: { fileSize: 5 * 1024 * 1024 },
 });
 
 exports.uploadBlogImage = upload.single("blogImage");
 
 exports.getAllPosts = catchAsync(async (req, res, next) => {
-  // const posts = await BlogPost.find();
   const features = new APIFeatures(BlogPost.find(), req.query)
     .filter()
     .sorting()
@@ -50,16 +47,6 @@ exports.getAllPosts = catchAsync(async (req, res, next) => {
     },
   });
 });
-
-// exports.createPost = catchAsync(async (req, res, next) => {
-//   const post = await BlogPost.create(req.body);
-//   res.status(201).json({
-//     status: "success",
-//     data: {
-//       post,
-//     },
-//   });
-// });
 
 exports.createPost = catchAsync(async (req, res, next) => {
   let blogImage;

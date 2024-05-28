@@ -6,19 +6,11 @@ const AppError = require("../utils/appError");
 exports.createComment = catchAsync(async (req, res, next) => {
   const { comment, user, post } = req.body;
 
-  // Create the new comment
   const newComment = await Comment.create({ comment, user, post });
 
-  // Update the associated blog post with the new comment's ID
   await BlogPost.findByIdAndUpdate(post, {
     $push: { comments: newComment._id },
   });
-
-  // Populate the user and post fields before sending the response
-  // const populatedComment = await newComment
-  //   .populate("user", "name")
-  //   .populate("post", "title")
-  //   .execPopulate();
 
   res.status(201).json({
     status: "success",
@@ -31,7 +23,6 @@ exports.createComment = catchAsync(async (req, res, next) => {
 exports.getAllComments = catchAsync(async (req, res, next) => {
   const { postId } = req.params;
 
-  // Find comments associated with the specified blog post
   const comments = await Comment.find({ post: postId });
 
   res.status(200).json({
@@ -84,7 +75,6 @@ exports.deleteComment = catchAsync(async (req, res, next) => {
     return next(new AppError("Comment not found", 404));
   }
 
-  // Update the associated blog post by removing the deleted comment's ID
   await BlogPost.findByIdAndUpdate(comment.post, {
     $pull: { comments: comment._id },
   });

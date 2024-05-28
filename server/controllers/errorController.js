@@ -7,21 +7,14 @@ const handleCastErrorDB = (err) => {
 };
 
 const handleDuplicateFieldsDB = (err) => {
-  // const value = err.keyValue.name;
   if (
     err.keyValue.name
       ? (value = err.keyValue.name)
       : (value = err.keyValue.price)
   ) {
-    // console.log(err);
     const message = `Duplicate field value: (${value}). please use another value`;
     return new AppError(message, 400);
   }
-  //   console.log(err);
-
-  // const message = `Duplicate field value: (${value}). please use another value`;
-
-  // return new AppError(message, 400);
 };
 
 const handleValidationErrorDB = (err) => {
@@ -50,16 +43,13 @@ const sendErrorDev = (err, res) => {
 };
 
 const sendErrorProd = (err, res) => {
-  // OPerational, trusted Error: send message to client
   if (err.isOperational) {
     res.status(err.statusCode).json({
       status: err.status,
       message: err.message,
     });
   } else {
-    // 1) Log error
     console.error("ERROR 💥", err);
-    // 2) Send generic message
     res.status(500).json({
       status: "error",
       message: "Something went Wrong",
@@ -68,8 +58,6 @@ const sendErrorProd = (err, res) => {
 };
 
 module.exports = (err, req, res, next) => {
-  // console.log('Recieved ->', err);
-  // console.log(err.stack);
   err.statusCode = err.statusCode || 500;
   err.status = err.status || "error";
 
@@ -85,7 +73,6 @@ module.exports = (err, req, res, next) => {
     if (error.name === "JsonWebTokenError") error = handleJWTError();
     if (error.name === "TokenExpiredError") error = handleJWTExpiredError();
 
-    // console.log('Sending error to prod', error);
     sendErrorProd(error, res);
   }
 };

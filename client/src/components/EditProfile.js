@@ -110,7 +110,7 @@ const EditProfile = () => {
             Email
           </label>
           <input
-            type="email" // Change input type to email
+            type="email"
             value={formData.email}
             onChange={handleChange}
             id="email"

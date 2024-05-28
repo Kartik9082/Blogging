@@ -10,7 +10,7 @@ const useGetMyProfile = () => {
 
   useEffect(() => {
     const getMyProfile = async () => {
-      if (!token) return; // Ensure token is available before making the request
+      if (!token) return;
 
       try {
         const res = await axios.get(`${USER_API_ENDPOINT}/me`, {

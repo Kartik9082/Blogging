@@ -38,7 +38,7 @@ const CreateBlog = () => {
       formData.append("content", content);
       formData.append("author", user?.userData?.data?.user?._id);
       if (image) {
-        formData.append("blogImage", image); // Use "blogImage" to match your model
+        formData.append("blogImage", image);
       }
 
       const res = await axios.post(`${BLOG_API_ENDPOINT}`, formData, {

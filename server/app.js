@@ -19,10 +19,6 @@ app.use(
   })
 );
 
-// app.get("/", (req, res) => {
-//   res.send("Hello World! MERN BLOGGING");
-// });
-
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/blogPost", blogRouter);
 app.use("/api/v1/comments", commentRouter);

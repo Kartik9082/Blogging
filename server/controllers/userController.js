@@ -4,15 +4,11 @@ const AppError = require("./../utils/appError");
 const catchAsync = require("./../utils/catchAsync");
 const APIFeatures = require("./../utils/apiFeatures");
 
-// configuring the multerStorage
-
 const multerStorage = multer.diskStorage({
-  // file destination
   destination: (req, file, cb) => {
     cb(null, "public/user-image");
   },
 
-  // each file of item
   filename: (req, file, cb) => {
     const ext = file.mimetype.split("/")[1];
     cb(null, `user-${req.user.id}-${Date.now()}.${ext}`);
@@ -30,7 +26,7 @@ const multerFilter = (req, file, cb) => {
 const upload = multer({
   storage: multerStorage,
   fileFilter: multerFilter,
-  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB file size limit
+  limits: { fileSize: 5 * 1024 * 1024 },
 });
 
 exports.uploadUserPhoto = upload.single("photo");
@@ -52,7 +48,6 @@ exports.getAllUsers = catchAsync(async (req, res, next) => {
     .limiting()
     .paginate();
 
-  // const doc = await features.query.explain();
   const users = await features.query;
   res.status(200).json({
     status: "success",

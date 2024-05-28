@@ -7,16 +7,9 @@ const app = require("./app");
 
 const DB = process.env.DATABASE;
 
-mongoose
-  .connect(DB, {
-    // useNewUrlParser: true,
-    // useCreateIndex: true,
-    // useFindAndModify: false,
-    // useUnifiedTopology: true,
-  })
-  .then(() => {
-    console.log("DB connection established successfully");
-  });
+mongoose.connect(DB, {}).then(() => {
+  console.log("DB connection established successfully");
+});
 
 const port = process.env.PORT || 6001;
 const server = app.listen(port, () => {

@@ -1,4 +1,3 @@
-// utils/APIFeatures.js
 class APIFeatures {
   constructor(query, queryString) {
     this.query = query;
@@ -24,7 +23,7 @@ class APIFeatures {
       };
     }
 
-    console.log("Parsed Query:", parsedQuery); // Log the parsed query
+    console.log("Parsed Query:", parsedQuery);
 
     this.query = this.query.find(parsedQuery);
     return this;

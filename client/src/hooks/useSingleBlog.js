@@ -15,7 +15,6 @@ const useSingleBlog = (id) => {
         },
         withCredentials: true,
       });
-      // console.log(response.data.data.post);
       dispatch(getSingleBlog(response.data));
     } catch (error) {
       console.error("ERROR:", error);

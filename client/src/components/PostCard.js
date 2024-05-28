@@ -16,7 +16,6 @@ const PostCard = ({ title, author, content, createdAt, _id }) => {
 
   const dateObject = new Date(isoDateString);
 
-  // Array of month names
   const monthNames = [
     "January",
     "February",
@@ -32,16 +31,9 @@ const PostCard = ({ title, author, content, createdAt, _id }) => {
     "December",
   ];
 
-  // Get month name
   const monthName = monthNames[dateObject.getMonth()];
-
-  // Get day
   const day = dateObject.getDate();
-
-  // Get year
   const year = dateObject.getFullYear();
-
-  // Format the date string
   const formattedDate = `${monthName} ${day} ${year}`;
 
   return (

@@ -52,9 +52,7 @@ const Signup = () => {
       setLoading(false);
       if (data.status === "success") {
         toast.success(data.status);
-        // Check for the status code instead of "res.ok"
-        // Optionally, you might want to handle successful signup differently
-        // For now, let's navigate the user to the home page
+
         navigate("/");
       }
       setFormData({

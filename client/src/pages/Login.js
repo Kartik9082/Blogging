@@ -2,8 +2,8 @@ import axios from "axios";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { USER_API_ENDPOINT } from "../utils/constants";
-import { useDispatch } from "react-redux"; // Importing useDispatch
-import { login } from "../redux/userSlice"; // Importing the login action
+import { useDispatch } from "react-redux";
+import { login } from "../redux/userSlice";
 import toast from "react-hot-toast";
 
 const Login = () => {
@@ -14,7 +14,7 @@ const Login = () => {
   const [errorMessage, setErrorMessage] = useState(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const dispatch = useDispatch(); // Initializing useDispatch
+  const dispatch = useDispatch();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
@@ -36,7 +36,6 @@ const Login = () => {
         },
       });
       const data = await res.data;
-      // console.log(data.token);
       if (data.token) {
         localStorage.setItem("token", JSON.stringify(data.token));
       }
@@ -48,8 +47,7 @@ const Login = () => {
       setLoading(false);
       if (data.status === "success") {
         toast.success(data.status);
-        // Dispatching the login action with user data
-        dispatch(login(data)); // Assuming the response contains user data
+        dispatch(login(data));
         navigate("/");
       }
       setFormData({

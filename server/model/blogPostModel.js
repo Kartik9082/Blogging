@@ -44,13 +44,13 @@ const blogPostSchema = new mongoose.Schema({
 blogPostSchema.pre(/find/, function (next) {
   this.populate({
     path: "author",
-    select: "name", // Select the fields you want to populate from the 'User' model
+    select: "name",
   }).populate({
     path: "comments",
-    select: "comment user", // Select fields from the 'Comment' model
+    select: "comment user",
     populate: {
       path: "user",
-      select: "name", // Populate the 'user' field within the 'Comment' model
+      select: "name",
     },
   });
   next();

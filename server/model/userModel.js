@@ -49,17 +49,16 @@ userSchema.pre("save", async function (next) {
   // Only run this function if password was actually modified
   if (!this.isModified("password")) return next();
 
-  // Hash the password with cost of 12
+  // Hashing the password with cost of 12
   this.password = await bcrypt.hash(this.password, 12);
 
-  // Delete passwordConfirm field
+  // Deleting passwordConfirm field
 
   this.confirmPassword = undefined;
   next();
 });
 
 userSchema.pre(/^find/, function (next) {
-  // this points to current query
   this.find({ active: { $ne: false } });
   next();
 });
@@ -77,12 +76,11 @@ userSchema.methods.changedPasswordAfter = function (JWTTimestamp) {
     const changedTimestamp = parseInt(
       this.passwordChangedAt.getTime() / 1000,
       10
-    ); // convert to UTC seconds
+    );
     console.log(changedTimestamp, JWTTimestamp);
     return JWTTimestamp < changedTimestamp;
   }
 
-  // Password not changed
   return false;
 };
 

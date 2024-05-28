@@ -5,7 +5,6 @@ import { useSelector } from "react-redux";
 
 const UserProfile = () => {
   const { id } = useParams();
-  //   console.log("param", id);
 
   useGetUser({ id });
   const user = useSelector((store) => store?.user?.getUser);
