@@ -55,7 +55,13 @@ const Profile = () => {
           <h1 className="text-2xl font-bold text-white mx-2  ">
             {user?.getCurrentUser?.data?.user?.name}
           </h1>
-          <p className="text-gray-200 text-sm mb-4 mx-2">
+          <p
+            className={
+              user?.getCurrentUser?.data?.user?.role === "user"
+                ? "text-green-500 text-sm mb-4 mx-2"
+                : "text-orange-500 text-sm mb-4 mx-2"
+            }
+          >
             {user?.getCurrentUser?.data?.user?.role}
           </p>
           <p className="text-sm m-2 py-2">
@@ -99,7 +105,7 @@ const Profile = () => {
                     {/*body*/}
                     <div className="relative p-6 flex-auto">
                       <p className="my-4 text-blueGray-500 text-lg leading-relaxed text-black">
-                        Are you sure you want to deactivate your account? This
+                        Are you sure you want to delete your account? This
                         action cannot be undone.
                       </p>
                     </div>
