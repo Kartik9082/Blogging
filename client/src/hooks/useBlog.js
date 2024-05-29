@@ -6,7 +6,9 @@ const useBlog = () => {
   const dispatch = useDispatch();
 
   const getPosts = async () => {
-    const data = await fetch("http://localhost:5001/api/v1/blogPost");
+    const data = await fetch(
+      "https://mernblog-backend-1.onrender.com/api/v1/blogPost"
+    );
     const json = await data.json();
 
     dispatch(getBlog(json));
