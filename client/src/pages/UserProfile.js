@@ -16,7 +16,7 @@ const UserProfile = () => {
         <div className="w-full md:w-1/2 flex justify-center">
           <img
             className="w-80 h-80 rounded-full mr-4 object-cover overflow-hidden "
-            src={`http://localhost:5001${user?.data?.user?.photo} `} // Use the profileImage variable here
+            src={`https://mernblog-backend-1.onrender.com${user?.data?.user?.photo} `} // Use the profileImage variable here
             alt="User"
             onError={(e) => console.error("Error loading image:", e)}
           />
