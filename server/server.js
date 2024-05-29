@@ -3,24 +3,6 @@ const dotenv = require("dotenv");
 const fs = require("fs");
 const path = require("path");
 
-// Function to ensure directory exists
-const ensureDirectoryExists = (directoryPath) => {
-  if (!fs.existsSync(directoryPath)) {
-    fs.mkdirSync(directoryPath, { recursive: true });
-    console.log(`Directory created at ${directoryPath}`);
-  } else {
-    console.log(`Directory already exists at ${directoryPath}`);
-  }
-};
-
-// Paths for user-image and blog-image directories
-const userImagePath = path.join(__dirname, "public/user-image");
-const blogImagePath = path.join(__dirname, "public/blog-image");
-
-// Ensure both directories exist
-ensureDirectoryExists(userImagePath);
-ensureDirectoryExists(blogImagePath);
-
 dotenv.config({ path: "./config.env" });
 
 const app = require("./app");
