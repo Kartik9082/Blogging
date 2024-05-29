@@ -32,8 +32,11 @@ const Profile = () => {
     }
   };
 
-  useGetMyProfile();
   const user = useSelector((store) => store?.user);
+  const loading = useGetMyProfile();
+  if (loading) {
+    return <p>Loading...</p>;
+  }
 
   if (!user.isLoggedIn) {
     return <Navigate to="/login" />;
