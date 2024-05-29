@@ -12,10 +12,22 @@ const app = express();
 app.use("/public", express.static(path.join(__dirname, "public")));
 app.use(morgan("dev"));
 app.use(express.json());
+const allowedOrigins = [
+  "https://blogging-seven-topaz.vercel.app",
+  "https://blogging-git-main-kartikays-projects-c448a263.vercel.app",
+  "https://blogging-qvlqr5dpw-kartikays-projects-c448a263.vercel.app",
+];
+
 app.use(
   cors({
-    origin: "blogging-i9iyy7qwl-kartikays-projects-c448a263.vercel.app",
-    credentials: true,
+    origin: function (origin, callback) {
+      // Check if the origin is in the allowedOrigins array
+      if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
   })
 );
 
