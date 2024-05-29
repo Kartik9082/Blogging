@@ -51,7 +51,7 @@ const PostInfo = () => {
               ""
             ) : (
               <img
-                src={`https://mernblog-backend-1.onrender.com${blog?.blogImage}`}
+                src={`http://localhost:5001${blog?.blogImage}`}
                 alt="blogImage"
                 className="rounded-xl md:w-auto md:h-auto"
               />
