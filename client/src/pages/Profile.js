@@ -49,7 +49,7 @@ const Profile = () => {
         <div className="w-full md:w-1/2 flex justify-center mt-2">
           <img
             className="w-80 h-80 rounded-full mr-4 object-cover overflow-hidden "
-            src={`http://localhost:5001${profileImage}`} // Use the profileImage variable here
+            src={`https://mernblog-krl5.onrender.com${profileImage}`} // Use the profileImage variable here
             alt="User"
             onError={(e) => console.error("Error loading image:", e)}
           />
